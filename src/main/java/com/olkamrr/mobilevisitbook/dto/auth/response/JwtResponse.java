@@ -1,5 +1,8 @@
 package com.olkamrr.mobilevisitbook.dto.auth.response;
 
+import com.olkamrr.mobilevisitbook.models.Group;
+import com.olkamrr.mobilevisitbook.models.Teacher;
+
 import java.util.List;
 
 public class JwtResponse {
@@ -8,12 +11,14 @@ public class JwtResponse {
     private int id;
     private String username;
     private List<String> roles;
+    private boolean active;
 
-    public JwtResponse(String accessToken, int id, String username, List<String> roles) {
+    public JwtResponse(String accessToken, int id, String username, List<String> roles, boolean active) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
         this.roles = roles;
+        this.active = active;
     }
 
     public String getAccessToken() {
@@ -51,5 +56,13 @@ public class JwtResponse {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

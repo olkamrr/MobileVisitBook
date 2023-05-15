@@ -2,6 +2,8 @@ package com.olkamrr.mobilevisitbook.controllers;
 
 import com.olkamrr.mobilevisitbook.dto.auth.request.LoginRequest;
 import com.olkamrr.mobilevisitbook.dto.auth.response.JwtResponse;
+import com.olkamrr.mobilevisitbook.models.Group;
+import com.olkamrr.mobilevisitbook.models.Teacher;
 import com.olkamrr.mobilevisitbook.repositories.UserRepository;
 import com.olkamrr.mobilevisitbook.security.UserDetailsImpl;
 import com.olkamrr.mobilevisitbook.security.jwt.JwtUtils;
@@ -49,10 +51,12 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
+        boolean active = userDetails.isEnabled();
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                roles));
+                roles,
+                active));
     }
 }

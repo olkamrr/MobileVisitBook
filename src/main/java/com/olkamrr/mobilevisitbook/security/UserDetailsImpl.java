@@ -1,6 +1,8 @@
 package com.olkamrr.mobilevisitbook.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.olkamrr.mobilevisitbook.models.Group;
+import com.olkamrr.mobilevisitbook.models.Teacher;
 import com.olkamrr.mobilevisitbook.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,12 +26,17 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
+    private boolean active;
+    private Group group;
+    private Teacher teacher;
+
     public UserDetailsImpl(int id, String username, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities, boolean active) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
+        this.active = active;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -41,7 +48,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
-                authorities);
+                authorities,
+                user.isActive());
     }
 
     @Override
@@ -81,7 +89,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return active;
     }
 
     @Override
@@ -93,4 +101,5 @@ public class UserDetailsImpl implements UserDetails {
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
     }
+
 }
