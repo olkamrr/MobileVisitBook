@@ -32,6 +32,11 @@ public class StudentService {
         return group;
     }
 
+    public Student findElder(int groupId) {
+        Student student = studentRepository.findByGroupIdAndElderIsTrue(groupService.findOne(groupId));
+        return student;
+    }
+
     public List<Student> studentByGroupOrderByLastNameAsc(int groupId){
         List<Student> students = studentRepository.findStudentsByGroupIdOrderByLastNameAsc(groupService.findOne(groupId));
         return students;

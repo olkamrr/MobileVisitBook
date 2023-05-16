@@ -28,4 +28,10 @@ public class StudentController {
         List<Student> students = studentService.studentByGroupOrderByLastNameAsc(groupId);
         return students;
     }
+
+    @GetMapping("/elder/{groupId}")
+    public Student findElder(@PathVariable(value = "groupId") int groupId) {
+        Student student = studentService.findElder(groupId);
+        return student;
+    }
 }

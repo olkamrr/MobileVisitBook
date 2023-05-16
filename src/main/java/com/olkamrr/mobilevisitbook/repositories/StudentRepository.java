@@ -12,4 +12,5 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     Student findById(int id);
     List<Student> findStudentsByGroupId(Group group);
     List<Student> findStudentsByGroupIdOrderByLastNameAsc(Group group);
+    Student findByGroupIdAndElderIsTrue(Group group);
 }
