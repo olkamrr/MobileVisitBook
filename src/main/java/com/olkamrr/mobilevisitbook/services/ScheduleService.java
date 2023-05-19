@@ -57,4 +57,8 @@ public class ScheduleService {
         List<Schedule> lesson = scheduleRepository.findSchedulesByGroupIdAndSemester(groupService.findOne(groupId), semester);
         return lesson;
     }
+    public List<Schedule> schedulesByGroupAndSemesterAndWeekday(int groupId, int semester, String weekday){
+        List<Schedule> lesson = scheduleRepository.findSchedulesByGroupIdAndSemesterAndWeekday(groupService.findOne(groupId), semester, weekday);
+        return lesson;
+    }
 }
