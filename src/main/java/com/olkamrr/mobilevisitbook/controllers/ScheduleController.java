@@ -32,6 +32,12 @@ public class ScheduleController {
         return scheduleService.update(id, lesson, group);
     }
 
+    @GetMapping("/edit/{id}")
+    public Schedule edit(@PathVariable(value = "id") int id){
+        Schedule schedule = scheduleService.findOne(id);
+        return schedule;
+    }
+
     @GetMapping("/delete/{id}")
     public Schedule delete(@PathVariable(value = "id") int id){
         return scheduleService.delete(id);
