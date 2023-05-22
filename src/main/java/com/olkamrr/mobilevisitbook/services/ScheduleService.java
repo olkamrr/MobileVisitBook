@@ -6,6 +6,7 @@ import com.olkamrr.mobilevisitbook.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,6 +60,14 @@ public class ScheduleService {
     }
     public List<Schedule> schedulesByGroupAndSemesterAndWeekday(int groupId, int semester, String weekday){
         List<Schedule> lesson = scheduleRepository.findSchedulesByGroupIdAndSemesterAndWeekday(groupService.findOne(groupId), semester, weekday);
+        return lesson;
+    }
+    public List<Schedule> schedulesByGroupAndSemesterAndWeekdayAndWeek(int groupId, int semester, String weekday, String week){
+        List<Schedule> lesson1 = scheduleRepository.findSchedulesByGroupIdAndSemesterAndWeekdayAndWeek(groupService.findOne(groupId), semester, weekday, week);
+        List<Schedule> lesson2 = scheduleRepository.findSchedulesByGroupIdAndSemesterAndWeekdayAndWeek(groupService.findOne(groupId), semester, weekday, "Каждую неделю");
+        List<Schedule> lesson = new ArrayList<>();
+        lesson.addAll(lesson1);
+        lesson.addAll(lesson2);
         return lesson;
     }
 }

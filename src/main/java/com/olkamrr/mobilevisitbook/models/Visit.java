@@ -10,6 +10,7 @@ public class Visit {
     private int id;
     private Date date;
     private String status;
+    private boolean confirmation;
     @ManyToOne(optional = false)
     @JoinColumn(name = "idLesson")
     private Schedule lessonId;
@@ -41,6 +42,14 @@ public class Visit {
         this.status = status;
     }
 
+    public boolean isConfirmation() {
+        return confirmation;
+    }
+
+    public void setConfirmation(boolean confirmation) {
+        this.confirmation = confirmation;
+    }
+
     public Schedule getLessonId() {
         return lessonId;
     }
@@ -63,6 +72,7 @@ public class Visit {
                 "id=" + id +
                 ", date=" + date +
                 ", status='" + status + '\'' +
+                ", confirmation=" + confirmation +
                 ", lessonId=" + lessonId +
                 ", studentId=" + studentId +
                 '}';
