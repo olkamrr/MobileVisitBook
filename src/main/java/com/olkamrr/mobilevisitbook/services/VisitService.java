@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,5 +76,17 @@ public class VisitService {
             }
         }
         return visit;
+    }
+
+    public List<Date> findDistinctDate(int lessonId) {
+        Schedule schedule = scheduleService.findOne(lessonId);
+        List<Date> dates = visitRepository.findDistinctDate(schedule);
+        return dates;
+    }
+
+    public List<Visit> getVisits(int lessonId, Date date) {
+        Schedule schedule = scheduleService.findOne(lessonId);
+        List<Visit> visits = visitRepository.findVisitsByLessonIdAndDate(schedule, date);
+        return visits;
     }
 }

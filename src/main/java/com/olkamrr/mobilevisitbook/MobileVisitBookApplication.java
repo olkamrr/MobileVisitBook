@@ -9,5 +9,4 @@ public class MobileVisitBookApplication {
     public static void main(String[] args) {
         SpringApplication.run(MobileVisitBookApplication.class, args);
     }
-
 }

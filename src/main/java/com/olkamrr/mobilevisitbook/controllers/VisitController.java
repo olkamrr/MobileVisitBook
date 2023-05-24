@@ -9,7 +9,14 @@ import com.olkamrr.mobilevisitbook.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.Calendar.HOUR;
 
 @RestController
 @RequestMapping("/api/visit")
@@ -42,9 +49,29 @@ public class VisitController {
         return visitService.findVisit(lessonId, studentId);
     }
 
-    @GetMapping("/find/{lessonId}/{studentId}/{data}")
-    public Visit findVisitLesson(@PathVariable(value = "lessonId") int lessonId, @PathVariable(value = "studentId") int studentId, @PathVariable(value = "data") String data) {
-        return visitService.findVisitLesson(lessonId, studentId, data);
+    @GetMapping("/find/{lessonId}/{studentId}/{date}")
+    public Visit findVisitLesson(@PathVariable(value = "lessonId") int lessonId, @PathVariable(value = "studentId") int studentId, @PathVariable(value = "date") String date) {
+        return visitService.findVisitLesson(lessonId, studentId, date);
     }
 
+    @GetMapping("/find/{lessonId}")
+    public List<Date> findDistinctDate(@PathVariable(value = "lessonId") int lessonId) {
+        List<Date> dates = visitService.findDistinctDate(lessonId);
+        for (Date date: dates) {
+            date.setTime(date.getTime() + TimeUnit.HOURS.toMillis(3));
+        }
+        return dates;
+    }
+
+    @GetMapping("/find/date/{lessonId}/{date}")
+    public List<Visit> getVisits(@PathVariable(value = "lessonId") int lessonId, @PathVariable(value = "date") String dataString) throws ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = format.parse(dataString);
+        List<Visit> visits = visitService.getVisits(lessonId, date);
+        for (Visit visit: visits) {
+            Date newDate = new Date(visit.getDate().getTime() + TimeUnit.HOURS.toMillis(3));
+            visit.setDate(newDate);
+        }
+        return visitService.getVisits(lessonId, date);
+    }
 }
