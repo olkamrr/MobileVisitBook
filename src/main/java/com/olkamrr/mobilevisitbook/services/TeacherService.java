@@ -1,5 +1,6 @@
 package com.olkamrr.mobilevisitbook.services;
 
+import com.olkamrr.mobilevisitbook.models.Group;
 import com.olkamrr.mobilevisitbook.models.Teacher;
 import com.olkamrr.mobilevisitbook.models.User;
 import com.olkamrr.mobilevisitbook.repositories.TeacherRepository;
@@ -31,6 +32,12 @@ public class TeacherService {
         Streamable.of(teacherRepository.findAll())
                 .forEach(teachers::add);
         return teachers;
+    }
+
+    public Teacher findByUser(int id) {
+        User user = userService.findOne(id);
+        Teacher teacher = teacherRepository.findByUser(user);
+        return teacher;
     }
 
     public User findUser(int id) {

@@ -66,4 +66,10 @@ public class ScheduleController {
         List<Schedule> lessons = scheduleService.schedulesByGroupAndSemesterAndWeekdayAndWeek(groupId, semester, weekday, week);
         return lessons;
     }
+
+    @GetMapping("/teacher/{teacherId}/{weekday}")
+    public List<Schedule> findSchedulesByTeacher(@PathVariable(value = "teacherId") int teacherId, @PathVariable(value = "weekday") String weekday){
+        List<Schedule> lessons = scheduleService.findSchedulesByTeacher(teacherId, weekday);
+        return lessons;
+    }
 }

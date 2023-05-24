@@ -2,6 +2,7 @@ package com.olkamrr.mobilevisitbook.services;
 
 import com.olkamrr.mobilevisitbook.models.Group;
 import com.olkamrr.mobilevisitbook.models.Schedule;
+import com.olkamrr.mobilevisitbook.models.Teacher;
 import com.olkamrr.mobilevisitbook.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,11 @@ public class ScheduleService {
         lesson.addAll(lesson1);
         lesson.addAll(lesson2);
         return lesson;
+    }
+
+    public List<Schedule> findSchedulesByTeacher(int teacherId, String weekday) {
+        Teacher teacher = teacherService.findOne(teacherId);
+        List<Schedule> lessons = scheduleRepository.findSchedulesByTeacherAndWeekday(teacher, weekday);
+        return lessons;
     }
 }

@@ -4,6 +4,7 @@ import com.olkamrr.mobilevisitbook.models.Teacher;
 import com.olkamrr.mobilevisitbook.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +23,10 @@ public class TeacherController {
     @GetMapping("/all")
     public List<Teacher> getAll() {
         return teacherService.getAllTeacher();
+    }
+
+    @GetMapping("/{userId}")
+    public Teacher getTeacher(@PathVariable(value = "userId") int id) {
+        return teacherService.findByUser(id);
     }
 }
